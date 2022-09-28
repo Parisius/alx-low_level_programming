@@ -1,1 +1,1 @@
-This is a repository for a low level programming training
+Start of a new pointer journey
