@@ -6,6 +6,12 @@
 #include <unistd.h>
 #include <stdio.h>
 
+
+/**
+ * formatter - A new type describing a formatter.
+ * @letter: A conversion specifier.
+ * @f: A function pointer to a print function corresponding to letter.
+ */
 int _printf(const char *format, ...);
 typedef struct formatter {
 	char * letter;
