@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * print_i - Prints an integer.
+ * print_d - Prints an integer.
  * @list: A va_list pointing to the integer to be printed.
  */
-void print_i(va_list list)
+void print_d(va_list list)
 {
-	int i;
+	int d;
 
-	i = va_arg(list, int);
+	d = va_arg(list, int);
 
-	print_number(i);
+	print_number(d);
 }

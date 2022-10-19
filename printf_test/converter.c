@@ -21,6 +21,7 @@ void (*converter(const char *symbol))(va_list list)
 		if (*symbol == *(func[i].letter))
 			return (func[i].f);
 	}
+
 	write(2, "conversion specifier lacks type at end of format", 48);
 	exit(1);
 }
