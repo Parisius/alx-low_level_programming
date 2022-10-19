@@ -12,7 +12,7 @@ void (*converter(const char *symbol))(va_list list)
 		{"c", print_c},
 		{"s", print_s},
 		{"d", print_d},
-		{"i", print_i},
+		{"i", print_i}
 	};
 	int i;
 
