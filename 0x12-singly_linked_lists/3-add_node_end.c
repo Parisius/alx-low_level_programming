@@ -10,11 +10,11 @@
  * Return: If the function fails - NULL.
  *         Otherwise - the address of the new element.
  */
-listint_t *add_node_end(list_t **head, const int n)
+list_t *add_node_end(list_t **head, const int n)
 {
-	listint_t *new, *last;
+	list_t *new, *last;
 
-	new = malloc(sizeof(listint_t));
+	new = malloc(sizeof(list_t));
 	if (new == NULL)
 		return (NULL);
 

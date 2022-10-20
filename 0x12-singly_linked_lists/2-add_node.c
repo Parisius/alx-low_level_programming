@@ -2,9 +2,9 @@
 
 /**
  * add_nodeint - Adds a new node at the beginning
- *               of a listint_t list.
+ *               of a list_t list.
  * @head: A pointer to the address of the
- *        head of the listint_t list.
+ *        head of the list_t list.
  * @n: The integer for the new node to contain.
  *
  * Return: If the function fails - NULL.
@@ -12,7 +12,7 @@
  */
 list_t *add_node(list_t **head, const int n)
 {
-	listint_t *new;
+	list_t *new;
 
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
