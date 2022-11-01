@@ -1,34 +1,80 @@
 #include "main.h"
 
 /**
- * append_text_to_file - Appends text at the end of a file.
- * @filename: A pointer to the name of the file.
- * @text_content: The string to add to the end of the file.
- *
- * Return: If the function fails or filename is NULL - -1.
- *         If the file does not exist the user lacks write permissions - -1.
- *         Otherwise - 1.
+ * _error - Read file.
+ * @e: Error number
+ * @filename: File name
  */
-int append_text_to_file(const char *filename, char *text_content)
+void _error(int e, char *filename)
 {
-	int o, w, len = 0;
-
-	if (filename == NULL)
-		return (-1);
-
-	if (text_content != NULL)
+	if (e == 98)
 	{
-		for (len = 0; text_content[len];)
-			len++;
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", filename);
+		exit(98);
 	}
+	if (e == 99)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
+		exit(99);
+	}
+}
+/**
+ * cp - Copies the content of a file to another file.
+ * @file_from: Name of the source file.
+ * @file_to: Name of the destination file.
+ * Return: 1 on success, -1 on failure.
+ */
+void cp(char *file_from, char *file_to)
+{
+	int fd_read, res_read, fd_write, res_write;
+	char *buf[1024];
 
-	o = open(filename, O_WRONLY | O_APPEND);
-	w = write(o, text_content, len);
-
-	if (o == -1 || w == -1)
-		return (-1);
-
-	close(o);
-
-	return (1);
+	/* READ */
+	fd_read = open(file_from, O_RDONLY);
+	if (fd_read < 0)
+		_error(98, file_from);
+	/* WRITE */
+	fd_write = open(file_to, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (fd_write < 0)
+	{
+		close(fd_read);
+		_error(99, file_to);
+	}
+	do {
+		/* READ */
+		res_read = read(fd_read, buf, 1024);
+		if (res_read < 0)
+			_error(98, file_from);
+		/* WRITE */
+		res_write = write(fd_write, buf, res_read);
+		if (res_write < res_read)
+			_error(99, file_to);
+	}	while (res_write == 1024);
+	if (close(fd_read) < 0)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_read);
+		close(fd_write);
+		exit(100);
+	}
+	if (close(fd_write) < 0)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_write);
+		exit(100);
+	}
+}
+/**
+ * main - Copies the content of a file to another file.
+ * @ac: Argument count
+ * @av: argument values
+ * Return: 0 on succes, -1 on error.
+ */
+int main(int ac, char *av[])
+{
+	if (ac != 3)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
+	}
+	cp(av[1], av[2]);
+	return (0);
 }
