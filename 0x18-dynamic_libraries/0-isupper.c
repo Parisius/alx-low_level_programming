@@ -17,3 +17,10 @@ int _isupper(int c)
 	return (0);
 	}
 }
+
+int _isalpha(int c){}
+int _atoi(char *s){}
+int _abs(int n){}
+char *_strcpy(char *dest, char *src){}
+char *_strpbrk(char *s, char *accept){}
+char *_strstr(char *haystack, char *needle){}
